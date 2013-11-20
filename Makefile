@@ -1,7 +1,8 @@
 R	:= R --no-save --no-restore
 RSCRIPT	:= Rscript
 DELETE	:= rm -fR
-PKGNAME := $(shell Rscript ./tools/get-pkg-name)
+PKGNAME := $(shell Rscript ./makeR/get-pkg-name)
+VERSION := $(shell Rscript ./makeR/get-pkg-version)
 TARGZ   := mlr_$(VERSION).tar.gz
 
 .SILENT:
@@ -29,7 +30,7 @@ clean:
 
 roxygenize: clean
 	printf "\nRoxygenizing package ...\n"
-	${RSCRIPT} ./tools/roxygenize
+	${RSCRIPT} ./makeR/roxygenize
 
 package: roxygenize
 	printf "\nBuilding package file $(TARGZ)\n"
@@ -49,7 +50,7 @@ check: package
 
 check-rev-dep: package
 	printf "\nRunning reverse dependency checks for CRAN ...\n"
-	${RSCRIPT} ./tools/check-rev-dep
+	${RSCRIPT} ./makeR/check-rev-dep
 
 htmlhelp: install
 	printf "\nGenerating html docs...\n"
@@ -57,7 +58,7 @@ htmlhelp: install
 	${DELETE} /tmp/pkgdocs
 	mkdir /tmp/pkgdocs
 	mv README.md README.xxx
-	${RSCRIPT} ./tools/generate-html-docs
+	${RSCRIPT} ./makeR/generate-html-docs
 	mv README.xxx README.md
 	${DELETE} Rplots*.pdf
 	git checkout gh-pages

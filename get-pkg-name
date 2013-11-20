@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
 
-cat(read.dcf("DESCRIPTION")[,"Name"])
+cat(read.dcf("DESCRIPTION")[,"Package"])
 
 
