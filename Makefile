@@ -1,7 +1,7 @@
 R	:= R --no-save --no-restore
 RSCRIPT	:= Rscript
 DELETE	:= rm -fR
-VERSION := $(shell Rscript ./tools/get-version)
+PKGNAME := $(shell Rscript ./tools/get-pkg-name)
 TARGZ   := mlr_$(VERSION).tar.gz
 
 .SILENT:
