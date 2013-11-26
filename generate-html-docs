@@ -10,7 +10,7 @@ pkg.name = basename(wd)
 setwd("/tmp/pkgdocs")
 try ({
   library(knitr)
-  library(mlr)
+  require(pkg.name, character.only=TRUE)
   knit_rd(pkg.name)
 })
 setwd(wd)

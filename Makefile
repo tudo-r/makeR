@@ -3,7 +3,7 @@ RSCRIPT	:= Rscript
 DELETE	:= rm -fR
 PKGNAME := $(shell Rscript ./makeR/get-pkg-name)
 VERSION := $(shell Rscript ./makeR/get-pkg-version)
-TARGZ   := mlr_$(VERSION).tar.gz
+TARGZ   := $(PKGNAME)_$(VERSION).tar.gz
 
 .SILENT:
 .PHONEY: clean roxygenize package windows install test check
@@ -62,9 +62,9 @@ htmlhelp: install
 	mv README.xxx README.md
 	${DELETE} Rplots*.pdf
 	git checkout gh-pages
-	rm -rf mlrhelp
-	mv /tmp/pkgdocs mlrhelp
-	git add mlrhelp
+	${DELETE} man
+	mv /tmp/pkgdocs man
+	git add man
 	git commit -am "new html help"
 	git push origin gh-pages
 	git checkout master
