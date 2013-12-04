@@ -9,7 +9,7 @@ https://github.com/berndbischl/BBmisc
 
 As using git submodules is harder than it should be, we document the two operations you need now:
 
-### Initially cloning the submodule after you have checked out a package repository
+### Initially cloning the submodule
 
 If the 'makeR' directory is empty after you have cloned a package repository, simply do 
 
