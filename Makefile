@@ -17,6 +17,7 @@ usage:
 	echo " install       - install the package"
 	echo " test          - run unit tests"
 	echo " check         - run R CMD check on the package"
+	echo " check-rev-dep - run a reverse dependency check against packages on CRAN"
 	echo " html          - build static html documentation"
 
 
