@@ -19,7 +19,7 @@ usage:
 	echo " check         - run R CMD check on the package"
 	echo " check-rev-dep - run a reverse dependency check against packages on CRAN"
 	echo " html          - build static html documentation"
-
+	echo " winbuilder    - ask for email and build on winbuilder"
 
 clean:
 	printf  "\nCleaning up ...\n"
@@ -70,4 +70,7 @@ htmlhelp: install
 	git push origin gh-pages
 	git checkout master
 
+winbuilder: roxygenize
+	printf "\nBuilding via winbuilder\n"
+	${RSCRIPT} ./makeR/winbuilder
 

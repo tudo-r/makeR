@@ -1,9 +1,10 @@
 #!/usr/bin/env Rscript
 
+library(BBmisc)
 library(devtools)
 library(stringr)
 
-#' Builds a package on winbuilder but sends link to an arbitrary email address.
+#' Builds a package on winbuilder, but sends link to an arbitrary email address.
 #
 #' Copies the package directory to a temporary directory, changes the maintainer field and
 #' then calls devtools::build_win.
@@ -19,26 +20,36 @@ library(stringr)
 #'   Default is to query the user on the R console.
 #' @return Nothing.
 buildOnWinBuilder = function(path=".", user.name="LIB USER", email) {
-  message("The package will be built on winbuilder.\nPLEASE USE THIS METHOD WITH CARE AND DO NOT AUTOMATE IT!")
+  checkArg(path, "character", len=1L, na.ok=FALSE)
+  checkArg(user.name, "character", len=1L, na.ok=FALSE)
+
   if (missing(email)) {
     message("Please type in your email address like foo@bar.com so a link can be send to you:")
-    email = scan("", what=character(), n=1, quiet=TRUE)
+    # scan does not work with Rscript. argh! 
+    # email = scan("", what=character(), n=1, quiet=TRUE)
+    con = file("stdin")
+    email = readLines(con, 1L)
+    close(con)
   }
+  checkArg(email, "character", len=1L, na.ok=FALSE)
+  
+  message("The package will be built on winbuilder.\nPLEASE USE THIS METHOD WITH CARE AND DO NOT AUTOMATE IT!")
+
   email = str_trim(email)
   dest.dir = tempdir()
   # FIXME there seems to be a problem with copying the .git
   # system3("cp", args=c("-r", path, dest.dir))
-  file.copy(path, dest.dir, recursive=TRUE)
   messagef("Copying directory package dir from %s to %s.", path, dest.dir)
+  file.copy(path, dest.dir, recursive=TRUE)
+  maintainer = sprintf("%s <%s>", user.name, email)
+  messagef("Setting MAINTAINER field to %s.", maintainer)
   desc.path = file.path(dest.dir, "DESCRIPTION")
   desc = read.dcf(desc.path)
-  desc[, "Maintainer"] = sprintf("%s <%s>", user.name, email)
+  desc[, "Maintainer"] = maintainer 
   write.dcf(desc, file=desc.path)
-  # build_win(dest.dir)
+  build_win(dest.dir)
   invisible(NULL)
 }
 
-
-options(warn = 2)
 buildOnWinBuilder(".")
 
