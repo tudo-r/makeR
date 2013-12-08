@@ -1,0 +1,44 @@
+#!/usr/bin/env Rscript
+
+library(devtools)
+library(stringr)
+
+#' Builds a package on winbuilder but sends link to an arbitrary email address.
+#
+#' Copies the package directory to a temporary directory, changes the maintainer field and
+#' then calls devtools::build_win.
+#'
+#' @param path [\code{character(1)}]\cr
+#'   Path where package is located on disk. 
+#'   Default is current directory \dQuote{.}.
+#' @param user.name [\code{character(1)}]\cr
+#'   User name for maintainer field. Not really needed. 
+#'   Default is \dQuote{LIB USER}.
+#' @param email [\code{character(1)}]\cr
+#'   Email addresss that winbdulder link should be sent to.
+#'   Default is to query the user on the R console.
+#' @return Nothing.
+buildOnWinBuilder = function(path=".", user.name="LIB USER", email) {
+  message("The package will be built on winbuilder.\nPLEASE USE THIS METHOD WITH CARE AND DO NOT AUTOMATE IT!")
+  if (missing(email)) {
+    message("Please type in your email address like foo@bar.com so a link can be send to you:")
+    email = scan("", what=character(), n=1, quiet=TRUE)
+  }
+  email = str_trim(email)
+  dest.dir = tempdir()
+  # FIXME there seems to be a problem with copying the .git
+  # system3("cp", args=c("-r", path, dest.dir))
+  file.copy(path, dest.dir, recursive=TRUE)
+  messagef("Copying directory package dir from %s to %s.", path, dest.dir)
+  desc.path = file.path(dest.dir, "DESCRIPTION")
+  desc = read.dcf(desc.path)
+  desc[, "Maintainer"] = sprintf("%s <%s>", user.name, email)
+  write.dcf(desc, file=desc.path)
+  # build_win(dest.dir)
+  invisible(NULL)
+}
+
+
+options(warn = 2)
+buildOnWinBuilder(".")
+
