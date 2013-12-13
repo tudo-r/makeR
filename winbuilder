@@ -10,10 +10,10 @@ library(stringr)
 #' then calls devtools::build_win.
 #'
 #' @param path [\code{character(1)}]\cr
-#'   Path where package is located on disk. 
+#'   Path where package is located on disk.
 #'   Default is current directory \dQuote{.}.
 #' @param user.name [\code{character(1)}]\cr
-#'   User name for maintainer field. Not really needed. 
+#'   User name for maintainer field. Not really needed.
 #'   Default is \dQuote{LIB USER}.
 #' @param email [\code{character(1)}]\cr
 #'   Email addresss that winbdulder link should be sent to.
@@ -25,13 +25,13 @@ buildOnWinBuilder = function(path=".", user.name="LIB USER", email) {
 
   if (missing(email)) {
     message("Please type in your email address like foo@bar.com so a link can be send to you:")
-    # scan does not work with Rscript. argh! 
+    # scan does not work with Rscript. argh!
     con = file("stdin")
     email = readLines(con, 1L)
     close(con)
   }
   checkArg(email, "character", len=1L, na.ok=FALSE)
-  
+
   message("The package will be built on winbuilder.\nPLEASE USE THIS METHOD WITH CARE AND DO NOT AUTOMATE IT!")
 
   # copy so we dont change anything inplace
@@ -46,7 +46,7 @@ buildOnWinBuilder = function(path=".", user.name="LIB USER", email) {
   messagef("Setting MAINTAINER field to %s.", maintainer)
   desc.path = file.path(dest.dir, "DESCRIPTION")
   desc = read.dcf(desc.path)
-  desc[, "Maintainer"] = maintainer 
+  desc[, "Maintainer"] = maintainer
   write.dcf(desc, file=desc.path)
 
   # this will also check package and do some safety validation, eg malformed email
@@ -56,3 +56,4 @@ buildOnWinBuilder = function(path=".", user.name="LIB USER", email) {
 
 buildOnWinBuilder(".")
 
+# vim: ft=r

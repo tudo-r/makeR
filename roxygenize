@@ -3,3 +3,5 @@
 require("methods")
 require("roxygen2")
 roxygenize(".")
+
+# vim: ft=r

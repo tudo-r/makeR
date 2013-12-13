@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 require("devtools")
 
 libpath = file.path(tempdir(), "R-lib")
@@ -16,3 +18,4 @@ if(!all(sapply(ok, is.null))) {
 
 message("All reverse dependencies ok!")
 
+# vim: ft=r
