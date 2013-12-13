@@ -15,6 +15,7 @@ usage:
 	echo " roxygenize    - roxygenize in-place"
 	echo " package       - build source package"
 	echo " install       - install the package"
+	echo " depenencies   - install package dependencies, including suggests"
 	echo " test          - run unit tests"
 	echo " check         - run R CMD check on the package"
 	echo " check-rev-dep - run a reverse dependency check against packages on CRAN"
@@ -48,6 +49,9 @@ test: install
 check: package
 	printf "\nRunning R CMD check ...\n"
 	${R} CMD check $(TARGZ)
+
+dependecies:
+	${RSCRIPT} ./makeR/dependencies
 
 check-rev-dep: package
 	printf "\nRunning reverse dependency checks for CRAN ...\n"
