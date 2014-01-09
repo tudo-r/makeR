@@ -23,7 +23,7 @@ usage:
 	echo " winbuilder    - ask for email and build on winbuilder"
 
 clean:
-	printf  "\nCleaning up ...\n"
+	echo  "Cleaning up ..."
 	${DELETE} src/*.o src/*.so *.tar.gz
 	${DELETE} html
 	${DELETE} staticdocs
@@ -31,34 +31,34 @@ clean:
 	${DELETE} .RData .Rhistory
 
 roxygenize: clean
-	printf "\nRoxygenizing package ...\n"
+	echo "Roxygenizing package ..."
 	${RSCRIPT} ./makeR/roxygenize
 
 package: roxygenize
-	printf "\nBuilding package file $(TARGZ)\n"
+	echo "Building package file $(TARGZ)"
 	${R} CMD build .
 
 install: package
-	printf "\nInstalling package $(TARGZ)\n"
+	echo "Installing package $(TARGZ)"
 	${R} CMD INSTALL $(TARGZ)
 
 test: install
-	printf "\nTesting package $(TARGZ)\n"
+	echo "Testing package $(TARGZ)"
 	${RSCRIPT} ./test_all.R
 
 check: package
-	printf "\nRunning R CMD check ...\n"
+	echo "Running R CMD check ..."
 	${R} CMD check $(TARGZ)
 
 dependecies:
 	${RSCRIPT} ./makeR/dependencies
 
 check-rev-dep: package
-	printf "\nRunning reverse dependency checks for CRAN ...\n"
+	echo "Running reverse dependency checks for CRAN ..."
 	${RSCRIPT} ./makeR/check-rev-dep
 
 htmlhelp: install
-	printf "\nGenerating html docs...\n"
+	echo "Generating html docs..."
 	mkdir staticdocs
 	${DELETE} /tmp/pkgdocs
 	mkdir /tmp/pkgdocs
@@ -75,6 +75,6 @@ htmlhelp: install
 	git checkout master
 
 winbuilder: roxygenize
-	printf "\nBuilding via winbuilder\n"
+	echo "Building via winbuilder"
 	${RSCRIPT} ./makeR/winbuilder
 
