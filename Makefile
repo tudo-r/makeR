@@ -54,7 +54,7 @@ check: package
 dependecies:
 	${RSCRIPT} ./makeR/dependencies
 
-check-rev-dep: package
+check-rev-dep: install
 	echo "Running reverse dependency checks for CRAN ..."
 	${RSCRIPT} ./makeR/check-rev-dep
 
