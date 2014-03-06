@@ -41,7 +41,7 @@ package: roxygenize
 
 install: package
 	echo "Installing package $(TARGZ)"
-	${R} CMD INSTALL $(TARGZ)
+	${R} CMD INSTALL --install-tests $(TARGZ)
 
 test: install
 	echo "Testing package $(TARGZ)"
