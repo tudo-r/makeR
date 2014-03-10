@@ -68,6 +68,7 @@ htmlhelp: install
 	mv README.xxx README.md
 	${DELETE} Rplots*.pdf
 	git checkout gh-pages
+	git pull
 	${DELETE} man
 	mv /tmp/pkgdocs man
 	git add man
