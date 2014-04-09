@@ -45,7 +45,7 @@ install: package
 
 test: install
 	echo "Testing package $(TARGZ)"
-	${RSCRIPT} ./test_all.R
+	${RSCRIPT} ./test_all.R $(file)
 
 check: package
 	echo "Running R CMD check ..."
