@@ -2,17 +2,19 @@
 
 library(methods)
 
-# library(staticdocs)
-# build_package(".", "/tmp/pkgdocs")
+options(BBmisc.ProgressBar.style = "off")
+options(BatchJobs.verbose = FALSE)
 
 wd = getwd()
 pkg.name = basename(wd)
 setwd("/tmp/pkgdocs")
-try ({
+on.exit(setwd(wd))
+ok = try ({
   library(knitr)
   require(pkg.name, character.only=TRUE)
   knit_rd(pkg.name)
 })
-setwd(wd)
+
+exit(as.integer(inherits(ok, "try-error")))
 
 # vim: ft=r
