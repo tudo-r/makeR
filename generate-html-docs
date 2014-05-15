@@ -15,6 +15,6 @@ ok = try ({
   knit_rd(pkg.name)
 })
 
-exit(as.integer(inherits(ok, "try-error")))
+quit(status = as.integer(inherits(ok, "try-error")))
 
 # vim: ft=r
