@@ -20,14 +20,11 @@ usage:
 	echo " check          - run R CMD check on the package"
 	echo " check-rev-dep  - run a reverse dependency check against packages on CRAN"
 	echo " check-rd-files - run Rd2pdf on each doc file to track hard-to-spot doc/latex errors"
-	echo " htmlhelp       - build static html documentation"
 	echo " winbuilder     - ask for email and build on winbuilder"
 
 clean:
 	echo  "Cleaning up ..."
 	${DELETE} src/*.o src/*.so *.tar.gz
-	${DELETE} html
-	${DELETE} staticdocs
 	${DELETE} *.Rcheck
 	${DELETE} .RData .Rhistory
 
@@ -57,24 +54,6 @@ dependecies:
 check-rev-dep: install
 	echo "Running reverse dependency checks for CRAN ..."
 	${RSCRIPT} ./makeR/check-rev-dep
-
-htmlhelp: install
-	echo "Generating html docs..."
-	mkdir staticdocs
-	${DELETE} /tmp/pkgdocs
-	mkdir /tmp/pkgdocs
-	mv README.md README.xxx
-	${RSCRIPT} ./makeR/generate-html-docs
-	mv README.xxx README.md
-	${DELETE} Rplots*.pdf
-	git checkout gh-pages
-	git pull
-	${DELETE} man
-	mv /tmp/pkgdocs man
-	git add man
-	git commit -am "new html help"
-	git push origin gh-pages
-	git checkout master
 
 winbuilder: roxygenize
 	echo "Building via winbuilder"
