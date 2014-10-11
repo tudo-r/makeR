@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
 library(BBmisc)
+library(checkmate)
 library(devtools)
 library(stringr)
 
