@@ -48,7 +48,7 @@ check: package
 	echo "Running R CMD check ..."
 	${R} CMD check $(TARGZ)
 
-dependecies:
+dependencies:
 	${RSCRIPT} ./makeR/dependencies
 
 check-rev-dep: install
