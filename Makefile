@@ -55,6 +55,10 @@ check-rev-dep: install
 	echo "Running reverse dependency checks for CRAN ..."
 	${RSCRIPT} ./makeR/check-rev-dep
 
+check-rd-files: install
+	echo "Checking RDs one by one ..."
+	${RSCRIPT} ./makeR/check-rd-files
+
 winbuilder: roxygenize
 	echo "Building via winbuilder"
 	${RSCRIPT} ./makeR/winbuilder
