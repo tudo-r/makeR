@@ -1,3 +1,6 @@
+The project is abandonware, and has from our side become completely superseeded by the rt script tools:
+https://github.com/rdatsci/rt
+
 ## makeR
 
 Makefile and tools for R packages
